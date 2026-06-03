@@ -1,6 +1,7 @@
 # Simple sample runner for C++ programs.
 CXX := g++
-CXXFLAGS := -std=c++23 -Wall -Wextra -O2
+# CXXFLAGS := -std=c++23 -Wall -Wextra -O2
+CXXFLAGS := -std=c++23 -Wall -Wextra -O2 -fmodules-ts
 BIN_DIR := bin
 SRC_DIR := src
 
@@ -10,8 +11,11 @@ BINS := $(patsubst %,$(BIN_DIR)/%,$(SAMPLES))
 .PHONY: all list run clean new
 all: $(BINS)
 
-$(BIN_DIR)/%: $(SRC_DIR)/%.cpp | $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $<
+#$(BIN_DIR)/%: $(SRC_DIR)/%.cpp | $(BIN_DIR)
+#	$(CXX) $(CXXFLAGS) -o $@ $<
+$(BIN_DIR)/%: $(SRC_DIR)/%.cpp $(SRC_DIR)/math.cppm | $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) -x c++ -c $(SRC_DIR)/math.cppm -o $(BIN_DIR)/math.o
+	$(CXX) $(CXXFLAGS) -o $@ $< $(BIN_DIR)/math.o
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)

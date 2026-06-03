@@ -1,7 +1,9 @@
 #include <iostream>
 #include <thread>
 #include <functional>
+#include <queue>
 using namespace std;
+
 void display(int n) {
     for (int i = 0; i < n; i++) {
         cout << "Venkat: " << i << endl;
@@ -18,6 +20,9 @@ void thread_function(std::function<void(int)> f, int n) {
     f(n);
 }
 int main() {
+       // Queue of tasks
+    queue<function<void()> > tasks_;
+    tasks_.emplace
     thread t1(thread_function,func,10);
     thread t2(thread_function,func2,10 );
     t1.join();
